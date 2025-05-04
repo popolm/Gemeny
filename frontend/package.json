@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "scripts": {
     "start": "live-server public --port=8080",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "devDependencies": {
     "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
     "live-server": "^1.2.2"
   },
   "jest": {
