@@ -10,6 +10,11 @@ const PORT = 3000;
 // ➡️ Stockage temporaire des messages
 const messages = [];
 
+app.listen(81, '0.0.0.0', () => {
+  console.log('✅ Backend en ligne sur http://localhost:81');
+});
+
+
 app.use(
   cors({
     origin: function (origin, callback) {
