@@ -1,24 +1,32 @@
-Write-Host "  Configuration de l'environnement Docker Minikube..."
-& minikube -p minikube docker-env --shell powershell | Invoke-Expression
+# Basculer Docker vers l'environnement Minikube
+Write-Host " Configuration de l'environnement Docker vers Minikube..."
+& minikube docker-env | Invoke-Expression
 
-# Lancer minikube tunnel dans une autre fenêtre si pas déjà ouvert
-$tunnelRunning = Get-Process | Where-Object { $_.ProcessName -like "minikube-tunnel" }
+# Rebuild images
+Write-Host " Build de l'image backend..."
+docker build -t backend-app ./backend
 
-Write-Host " Rebuild de l'image backend..."
-cd backend
-docker build -t backend-app .
+Write-Host " Build de l'image frontend..."
+docker build -t frontend-app ./frontend
 
-Write-Host " Rebuild de l'image frontend..."
-cd ../frontend
-docker build -t frontend-app .
-
-Write-Host "Restart des déploiements Kubernetes..."
-cd ../k8s
+# Redémarrer les déploiements
+Write-Host "Redémarrage des pods backend et frontend..."
 kubectl rollout restart deployment backend-deployment
 kubectl rollout restart deployment frontend-deployment
 
-Write-Host " État des pods :"
-kubectl get svc
+# Lancer minikube tunnel en arrière-plan
+Write-Host " Lancement du tunnel Minikube..."
+Start-Process powershell -ArgumentList "minikube tunnel" -WindowStyle Hidden
 
-Write-Host " Ouverture de l'IHM frontend..."
-minikube tunnel
+# Attendre un peu avant les port-forwards
+Start-Sleep -Seconds 2
+
+# Port-forward Grafana
+Write-Host " Port-forward Grafana sur http://localhost:3000"
+Start-Process powershell -ArgumentList "kubectl port-forward svc/loki-grafana 3000:80"
+
+# Port-forward Loki
+Write-Host " Port-forward Loki sur http://localhost:3100"
+Start-Process powershell -ArgumentList "kubectl port-forward service/loki 3100:3100"
+
+Write-Host " Environnement de développement prêt !"

@@ -1,1 +1,17 @@
-node_modules
+# Node
+node_modules/
+.env
+coverage/
+*.db
+
+# Logs
+logs/
+*.log
+
+# Build
+dist/
+build/
+
+# System
+.DS_Store
+Thumbs.db
