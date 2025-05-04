@@ -5,7 +5,7 @@ const http = require("http");
 const WebSocket = require("ws");
 
 const app = express();
-const PORT = 3000;
+const PORT = 3001;
 
 // ➡️ Stockage temporaire des messages
 const messages = [];
