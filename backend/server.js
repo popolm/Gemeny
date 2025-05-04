@@ -83,5 +83,3 @@ app.get("/messages", (req, res) => {
 server.listen(PORT, () => {
   console.log(`✅ Backend en ligne `);
 });
-
-module.exports = app;

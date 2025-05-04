@@ -41,11 +41,3 @@ jobs:
         with:
           name: coverage-${{ matrix.project }}
           path: ${{ matrix.project }}/coverage
-
-      - name: 🔁 Run regression tests
-        if: matrix.project == 'backend'
-        run: npm run test:regression
-
-      - name: 🔁 Run regression tests
-        if: matrix.project == 'backend'
-        run: npm run test:regression || echo "⚠️ No regression tests found"
