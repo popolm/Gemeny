@@ -3,16 +3,43 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const http = require("http");
 const WebSocket = require("ws");
+const fs = require("fs");
+const path = require("path");
 
 const app = express();
 const PORT = 3000;
 
-// ➡️ Stockage temporaire des messages
-const messages = [];
+// ➡️ Chemin vers le fichier de persistance
+const DB_FILE = "/app/data/db.json";
 
-// app.listen(PORT, "0.0.0.0", () => {
-//   console.log(`✅! Backend en ligne sur http://localhost:${PORT}`);
-// });
+// ➡️ Fonction d’offuscation simple
+function obfuscateMessage(message) {
+  return message
+    .split("")
+    .map((char) => String.fromCharCode(char.charCodeAt(0) + 1))
+    .join("");
+}
+
+// ➡️ Chargement des messages existants
+let messages = [];
+if (fs.existsSync(DB_FILE)) {
+  try {
+    messages = JSON.parse(fs.readFileSync(DB_FILE, "utf-8"));
+    console.log(`📁 ${messages.length} messages chargés depuis db.json`);
+  } catch (err) {
+    console.error("❌ Erreur lors du chargement de db.json :", err);
+  }
+}
+
+// ➡️ Fonction pour sauvegarder les messages
+function saveMessages() {
+  try {
+    fs.writeFileSync(DB_FILE, JSON.stringify(messages, null, 2));
+    console.log("💾 Messages sauvegardés dans db.json");
+  } catch (err) {
+    console.error("❌ Erreur lors de l'écriture de db.json :", err);
+  }
+}
 
 app.use(
   cors({
@@ -32,10 +59,8 @@ app.use(
   })
 );
 
-// ➡️ Pour lire du JSON dans les requêtes POST
 app.use(bodyParser.json());
 
-// Route GET pour vérifier que le backend est opérationnel
 app.get("/", (req, res) => {
   res.send("Backend opérationnel ✅");
 });
@@ -51,20 +76,28 @@ app.get("/hello", (req, res) => {
   res.json({ message: "Hello world" });
 });
 
-// ➡️ Route pour recevoir les messages (POST)
 app.post("/messages", (req, res) => {
+  const rawMessage = req.body.message;
+
+  if (!rawMessage || rawMessage.trim() === "") {
+    console.warn("⚠️ Message vide reçu");
+    return res.status(400).json({ error: "Le message ne peut pas être vide" });
+  }
+
+  const obfuscated = obfuscateMessage(rawMessage);
+
   const newMessage = {
     id: Date.now().toString(),
-    message: req.body.message,
+    message: obfuscated,
   };
 
   messages.push(newMessage);
+  saveMessages();
 
   console.log(
-    `📨 Nouveau POST reçu - ID: ${newMessage.id}, Message: ${newMessage.message}`
+    `📨 Nouveau POST reçu - ID: ${newMessage.id}, Message: ${rawMessage} → ${obfuscated}`
   );
 
-  // Diffuser le message à tous les clients WebSocket
   wss.clients.forEach((client) => {
     if (client.readyState === WebSocket.OPEN) {
       client.send(JSON.stringify(newMessage));
@@ -74,12 +107,10 @@ app.post("/messages", (req, res) => {
   res.status(201).json(newMessage);
 });
 
-// ➡️ Route GET pour voir tous les messages enregistrés (optionnel)
 app.get("/messages", (req, res) => {
   res.json(messages);
 });
 
-// ➡️ Lancer le serveur
 server.listen(PORT, () => {
-  console.log(`✅ Backend en ligne `);
+  console.log(`✅ Backend en ligne sur http://localhost:${PORT}`);
 });

@@ -1,12 +1,26 @@
-apiVersion: v1
-kind: Service
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: backend-service
+  name: backend
 spec:
-  type: NodePort
+  replicas: 1
   selector:
-    app: backend
-  ports:
-    - port: 3000        # Port interne du service
-      targetPort: 3000  # Port du conteneur
-      nodePort: 30080   # Port exposé sur localhost
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: ton-image:latest
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - name: gemeny-storage
+              mountPath: /app/data
+      volumes:
+        - name: gemeny-storage
+          persistentVolumeClaim:
+            claimName: gemeny-pvc
