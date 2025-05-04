@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "serve": "PORT=3001 node server.js",
+    "serve": "PORT=43210 node server.js",
     "test": "jest --coverage",
-    "loadtest": "start-server-and-test serve http://localhost:3001/hello k6 run test/load/load_test.js"  },
+    "loadtest": "start-server-and-test serve http://localhost:43210/hello k6 run test/load/load_test.js"
+  },
   "dependencies": {
     "body-parser": "^2.2.0",
     "cors": "^2.8.5",

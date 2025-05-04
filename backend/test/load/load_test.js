@@ -10,7 +10,7 @@ export const options = {
   },
 };
 export default function () {
-  const res = http.get("http://localhost:81/hello");
+  const res = http.get("http://localhost:43210/hello");
   console.log(res.body);
 
   check(res, {
