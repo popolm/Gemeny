@@ -5,14 +5,14 @@ const http = require("http");
 const WebSocket = require("ws");
 
 const app = express();
-const PORT = process.env.PORT || 0;
+const PORT = 3000;
 
 // ➡️ Stockage temporaire des messages
 const messages = [];
 
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`✅! Backend en ligne sur http://localhost:${PORT}`);
-});
+// app.listen(PORT, "0.0.0.0", () => {
+//   console.log(`✅! Backend en ligne sur http://localhost:${PORT}`);
+// });
 
 app.use(
   cors({

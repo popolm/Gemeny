@@ -5,12 +5,13 @@
   "scripts": {
     "serve": "PORT=43210 node server.js",
     "test": "jest --coverage",
-    "loadtest": "start-server-and-test serve http://localhost:43210/hello k6 run test/load/load_test.js"
+    "test:regression": "jest test/regression"
   },
   "dependencies": {
     "body-parser": "^2.2.0",
     "cors": "^2.8.5",
     "express": "^4.21.2",
+    "get-port": "^7.1.0",
     "ws": "^8.18.2"
   },
   "devDependencies": {
