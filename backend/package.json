@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "serve": "node server.js",
     "test": "jest --coverage",
     "loadtest": "start-server-and-test serve http://localhost:81 k6 run test/load/load_test.js"
   },
