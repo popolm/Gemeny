@@ -52,4 +52,4 @@ jobs:
       - name: 📈 Run load test with k6
         uses: grafana/k6-action@v0.3.1
         with:
-          filename: backend/test/load/load/load_test.js
+          filename: backend/test/load/load_test.js
