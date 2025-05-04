@@ -11,7 +11,7 @@ const PORT = 3000;
 const messages = [];
 
 app.listen(PORT, '0.0.0.0', () => {
-  console.log(`✅ Backend en ligne sur http://localhost:${PORT}`);});
+  console.log(`✅! Backend en ligne sur http://localhost:${PORT}`);});
 
 
 app.use(
