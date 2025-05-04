@@ -1,17 +1,18 @@
-import http from 'k6/http';
-import { sleep, check } from 'k6';
+import http from "k6/http";
+import { check, sleep } from "k6";
 
 export let options = {
-    vus: 100, // Nombre d'utilisateurs virtuels simultanés
-    duration: '30s', // Durée du test
+  vus: 100,
+  duration: "30s",
 };
 
 export default function () {
-    let res = http.get('http://your-api-url/hello');
+  const res = http.get("http://localhost:81/hello");
+  console.log(res.body);
 
-    check(res, {
-        'is status 200': (r) => r.status === 200,
-    });
+  check(res, {
+    "is status 200": (r) => r.status === 200,
+  });
 
-    sleep(1);
+  sleep(1);
 }

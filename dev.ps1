@@ -10,7 +10,7 @@ Write-Host " Build de l'image frontend..."
 docker build -t frontend-app ./frontend
 
 # Redémarrer les déploiements
-Write-Host "Redémarrage des pods backend et frontend..."
+Write-Host " Redémarrage des pods backend et frontend..."
 kubectl rollout restart deployment backend-deployment
 kubectl rollout restart deployment frontend-deployment
 
@@ -29,4 +29,12 @@ Start-Process powershell -ArgumentList "kubectl port-forward svc/loki-grafana 30
 Write-Host " Port-forward Loki sur http://localhost:3100"
 Start-Process powershell -ArgumentList "kubectl port-forward service/loki 3100:3100"
 
-Write-Host " Environnement de développement prêt !"
+# Attendre le démarrage de l'app
+Write-Host " Attente de 5 secondes pour laisser l'application démarrer..."
+Start-Sleep -Seconds 5
+
+# Lancer le test de charge
+Write-Host " Lancement du test de charge K6 sur http://localhost:81/hello"
+k6 run .\backend\test\load\load_test.js
+
+Write-Host "Test de charge terminé !"

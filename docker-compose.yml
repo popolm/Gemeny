@@ -1,13 +1,19 @@
 version: "3.8"
 
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  node-exporter:
+    image: prom/node-exporter
     ports:
-      - "8080:8080"
+      - 9100:9100
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - 9090:9090
     volumes:
-      - .:/app
-      - /app/node_modules
-    command: npm start
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 3000:3000

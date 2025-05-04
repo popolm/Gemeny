@@ -43,6 +43,10 @@ wss.on("connection", (ws) => {
   console.log("🔗 Client WebSocket connecté");
 });
 
+app.get("/hello", (req, res) => {
+  res.json({ message: "Hello world" });
+});
+
 // ➡️ Route pour recevoir les messages (POST)
 app.post("/messages", (req, res) => {
   const newMessage = {
