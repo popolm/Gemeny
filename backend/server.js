@@ -77,5 +77,5 @@ app.get("/messages", (req, res) => {
 
 // ➡️ Lancer le serveur
 server.listen(PORT, () => {
-  console.log(`✅ Backend en ligne sur http://localhost:${PORT}`);
+  console.log(`✅ Backend en ligne `);
 });
