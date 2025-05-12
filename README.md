@@ -1,6 +1,6 @@
 pour lancer le projet
 
-tout dans terminal dans cd C:\Users\lmgpa\my-javascript-app>
+tout dans terminal dans cd C:\Users\users\my-javascript-app>
 
 cd front/
 npm start
@@ -15,7 +15,7 @@ minikube start
 minikube ip (pour vérifier que ça fonctionne bien)
 minikube tunnel
 
-sur internet :
+sur l'internet :
 localhost:80
 localhost:81
 
