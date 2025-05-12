@@ -9,10 +9,8 @@ const path = require("path");
 const app = express();
 const PORT = 3000;
 
-// ➡️ Chemin vers le fichier de persistance
 const DB_FILE = "/app/data/db.json";
 
-// ➡️ Fonction d’offuscation simple
 function obfuscateMessage(message) {
   return message
     .split("")
@@ -20,7 +18,6 @@ function obfuscateMessage(message) {
     .join("");
 }
 
-// ➡️ Chargement des messages existants
 let messages = [];
 if (fs.existsSync(DB_FILE)) {
   try {
@@ -31,7 +28,6 @@ if (fs.existsSync(DB_FILE)) {
   }
 }
 
-// ➡️ Fonction pour sauvegarder les messages
 function saveMessages() {
   try {
     fs.writeFileSync(DB_FILE, JSON.stringify(messages, null, 2));

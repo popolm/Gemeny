@@ -5,8 +5,8 @@ export const options = {
   vus: 100,
   duration: "1000s",
   thresholds: {
-    http_req_duration: ["p(95)<500"], // 95% des requêtes < 500ms
-    http_req_failed: ["rate<0.01"], // <1% d'erreurs
+    http_req_duration: ["p(95)<500"],
+    http_req_failed: ["rate<0.01"],
   },
 };
 export default function () {

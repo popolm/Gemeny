@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const messagesContainer = document.createElement("div");
   document.body.appendChild(messagesContainer);
 
-  // Initialiser WebSocket
   const ws = new WebSocket("ws://127.0.0.1:3000");
 
   ws.onopen = () => {
@@ -35,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((response) => response.json())
       .then((data) => {
         console.log("Success:", data);
-        inputField.value = ""; // Réinitialiser le champ
+        inputField.value = "";
       })
       .catch((error) => {
         console.error("Error:", error);

@@ -7,7 +7,6 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-// Simuler les routes du serveur
 app.get("/", (req, res) => res.send("Backend opérationnel ✅"));
 app.post("/messages", (req, res) => {
   const newMessage = { id: "1", message: req.body.message };

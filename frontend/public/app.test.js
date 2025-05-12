@@ -13,14 +13,13 @@ describe("Frontend Tests", () => {
     appHtml = fs.readFileSync(htmlPath, "utf8");
     document.body.innerHTML = appHtml;
 
-    // Simuler WebSocket
     mockWebSocket = {
       send: jest.fn(),
       addEventListener: jest.fn(),
     };
     global.WebSocket = jest.fn(() => mockWebSocket);
 
-    require("./app.js"); // Charger le script frontend
+    require("./app.js");
   });
 
   it("doit afficher un titre", () => {

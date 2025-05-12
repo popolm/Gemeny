@@ -26,3 +26,12 @@ kubectl port-forward service/loki 3100:3100
 Invoke-WebRequest -Uri "http://localhost:3100/loki/api/v1/query?query={namespace=`"default`"}" -UseBasicParsing
 
 kubectl port-forward -n default $(kubectl get pods -l app=promtail -n default -o jsonpath="{.items[0].metadata.name}") 9080:9080
+
+kubectl port-forward -n monitoring svc/prometheus-server 9090:80
+
+accès db.json : 
+
+kubectl get pods
+kubectl exec -it "nomdupods" -- /bin/sh
+cd app/data/
+cat db.json
